@@ -24,3 +24,4 @@ When I clicked some pin he must show temperature elemet for that I need to creat
 In Info Window I need to create the possibility to close that window so I need to create onCloseClick.
 
 
+# edit by marko
