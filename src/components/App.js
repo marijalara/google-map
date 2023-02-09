@@ -1,66 +1,78 @@
 import React, { useState } from "react";
 import { GoogleMap, withScriptjs, withGoogleMap, Marker, InfoWindow} from "react-google-maps";
+import DisplayWeather from "./DisplayWeather";
 
 const coordinates=[
     {
         id: 0, 
         name: 'Kragujevac', 
-        lat: 44.010208, 
-        lng: 20.91826, 
-        temperature: '8 °C'
+        location: {
+            lat: 44.0167, 
+            lng: 20.9167, 
+        }
     },
     {
         id: 1, 
         name: 'Beograd', 
-        lat: 44.815071, 
-        lng: 20.460480, 
-        temperature: '7 °C'
+        location: {
+            lat: 44.804, 
+            lng: 20.4651,
+        }
     },
     {
         id: 2, 
         name: 'Novi Sad', 
-        lat: 45.254550, 
-        lng: 19.842580, 
-        temperature: '8 °C'
+        location: {
+            lat: 45.2517, 
+            lng: 19.8369, 
+        }
     },
     {
         id: 3, 
         name: 'Nis', 
-        lat: 43.316872, 
-        lng: 21.894501, 
-        temperature: '7 °C'
+        location: {
+            lat: 43.3247, 
+            lng: 21.9033, 
+        }
     },
 ]
 
 const Map=() => {
     const [selectedElement, setSelectedElement]=useState(null)
-
+    const [weather, setWeather]=useState({})
+    
+    const handleClick=async(id) => {
+        const result= await fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${coordinates[id].location.lat}&lon=${coordinates[id].location.lng}&units=metric&APPID=${process.env.REACT_APP_OPENWEATHER_KEY}`)
+        .then((res) => res.json())
+        .then((result) => result) 
+            setWeather({result: result})
+        } 
+    
     return(
         <GoogleMap 
             defaultZoom={10}
-            defaultCenter={{lat: 44.010208, lng: 20.918261}}
+            defaultCenter={{lat: 44.0167, lng: 20.9167}}
         >
-            {coordinates.map((cord) => (
+            {coordinates.map((cord,id) => (
                 <Marker 
-                    key={cord.id} 
-                    position={{
-                        lat: cord.lat,
-                        lng: cord.lng
-                    }} 
-                    onClick={() => setSelectedElement(cord)}
-                />
+                    key={id} 
+                    position={cord.location} 
+                    onClick={() =>{
+                        setSelectedElement(cord)
+                        handleClick(id) 
+                    }}
+                />        
             ))}
             {selectedElement ? (
                 <InfoWindow 
-                    position={{
-                        lat: selectedElement.lat,
-                        lng: selectedElement.lng
-                    }} 
+                    position={selectedElement.location} 
                     onCloseClick={() => setSelectedElement(null)}
                 >
-                    <div>
-                        <h4>Temperature:{selectedElement.temperature}</h4>
-                    </div>
+                    {weather !==undefined ? (
+                        <div>
+                            <DisplayWeather selectedElement={selectedElement} weather={weather.result}/>
+                        </div>  
+                    ): null}
                 </InfoWindow>
             ): null}
         </GoogleMap>
