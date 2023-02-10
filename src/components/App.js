@@ -68,11 +68,9 @@ const Map=() => {
                     position={selectedElement.location} 
                     onCloseClick={() => setSelectedElement(null)}
                 >
-                    {weather !==undefined ? (
-                        <div>
-                            <DisplayWeather selectedElement={selectedElement} weather={weather.result}/>
-                        </div>  
-                    ): null}
+                    <div>
+                        <DisplayWeather selectedElement={selectedElement} weather={weather.result}/>
+                    </div>  
                 </InfoWindow>
             ): null}
         </GoogleMap>

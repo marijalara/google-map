@@ -1,10 +1,9 @@
 import React from "react";
 
 const DisplayWeather=({weather, selectedElement}) => {
-    console.log(weather.main?.temp)
     return (
         <div>
-            {selectedElement ? (
+            {selectedElement && weather!==undefined ? (
                 <h4>Temperature: 
                     {Math.round(weather.main.temp )}&deg;C 
                     <br/>
@@ -16,8 +15,7 @@ const DisplayWeather=({weather, selectedElement}) => {
                     Wind:
                     {weather.wind.speed} m/s
                 </h4>
-            ): null}
-            
+            ): null} 
         </div>
     )
 }

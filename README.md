@@ -20,5 +20,8 @@ In console I had error, that error was InvalidKeyMapError, so I thought the prob
 I imported Marker from the same package to create interactive pins. I needed to create array with object which contained information that I will use in Marker tag, for that I needed position with latitude and longitude. For implementation that array I used map statement, and inside that I put Marker tag.
 
 For message with temerature information I used Info Window so I needed to import that from same package. I needed to create state for the pins I selected, so I needed to create condition where the selected pin is true to return Info Window which will contain position element- to know which city is selected and it will contain temerature element. 
+
 When I click on some pin it must show temperature element, for that I need to create onClick on Marker tag.
+For that temperature element I used https://openweathermap.org/ where I created API key. After that I created handleClick function where I did fetch data and that function I put to onClick on Marker tag. I created a new file with name DisplayWeather where I used selectedElement and weather as props and I did some condition if they are true, I must see temperature elements.
+
 In Info Window I need to create the possibility to close that window so I need to create onCloseClick.
