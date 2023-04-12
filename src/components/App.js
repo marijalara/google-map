@@ -45,7 +45,7 @@ const Map=() => {
         const result= await fetch(`http://api.openweathermap.org/data/2.5/weather?lat=${coordinates[id].location.lat}&lon=${coordinates[id].location.lng}&units=metric&APPID=${process.env.REACT_APP_OPENWEATHER_KEY}`)
         .then((res) => res.json())
         .then((result) => result) 
-            setWeather({result: result})
+            setWeather({result})
         } 
     
     return(
